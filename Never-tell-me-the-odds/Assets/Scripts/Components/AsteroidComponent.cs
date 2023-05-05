@@ -3,9 +3,11 @@ using Unity.Entities;
 [GenerateAuthoringComponent]
 public struct AsteroidComponent : IComponentData
 {
-    public enum AsteroidSize
+    public enum AsteroidSize : int
     {
-        SMALL, MEDIUM, BIG
+        BIG = 0,
+        MEDIUM = 1,
+        SMALL = 2
     }
 
     public AsteroidSize Size;

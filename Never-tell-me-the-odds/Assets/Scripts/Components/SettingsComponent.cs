@@ -71,5 +71,29 @@ public struct SettingsComponent : IComponentData
     public KeyCode FireButton;
     public KeyCode HyperspaceButton;
     public float TurnIncrement;
-    public float TurnButtonRepeatSpeed;    
+    public float TurnButtonRepeatSpeed;
+
+    public float GetSpeedScaleByAsteroidSize(AsteroidComponent.AsteroidSize size)
+    {
+        switch (size)
+        {
+            case AsteroidComponent.AsteroidSize.BIG: return AsteroidSpeedScaleBig; break;
+            case AsteroidComponent.AsteroidSize.MEDIUM: return AsteroidSpeedScaleMedium; break;
+            case AsteroidComponent.AsteroidSize.SMALL: return AsteroidSpeedScaleSmall; break;
+        }
+
+        return 1;
+    }
+
+    public float GetSizeScaleByAsteroidSize(AsteroidComponent.AsteroidSize size)
+    {
+        switch (size)
+        {
+            case AsteroidComponent.AsteroidSize.BIG: return AsteroidSizeScaleBig; break;
+            case AsteroidComponent.AsteroidSize.MEDIUM: return AsteroidSizeScaleMedium; break;
+            case AsteroidComponent.AsteroidSize.SMALL: return AsteroidSizeScaleSmall; break;
+        }
+
+        return 1;
+    }
 }
