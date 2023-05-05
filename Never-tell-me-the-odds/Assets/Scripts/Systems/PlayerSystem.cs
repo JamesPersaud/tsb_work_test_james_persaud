@@ -14,7 +14,8 @@ public class PlayerSystem : ComponentSystem
             ref PlayerComponent player,
             ref Rotation rotation,
             ref VelocityComponent velocity,
-            ref AccelerationComponent acceleration) =>
+            ref AccelerationComponent acceleration,
+            ref Translation translation) =>
         {
             player.Heading += input.Turning;
 
@@ -36,6 +37,21 @@ public class PlayerSystem : ComponentSystem
                 acceleration.Acceleration = new float3(0,1,0);
                 acceleration.Acceleration = math.rotate(rotation.Value, acceleration.Acceleration);
                 acceleration.Acceleration *= input.Thrusting;
+            }
+
+            //if firing then create a new fire bullet event
+            if(input.Firing)
+            {
+                float3 firingDirectionLocal = new float3(0, 1, 0);
+                firingDirectionLocal = math.rotate(rotation.Value, firingDirectionLocal);
+
+                float3 bulletVelocity = (firingDirectionLocal * settings.BulletBaseSpeed) + velocity.Velocity;
+                float3 firingPoint = firingDirectionLocal * 0.5f + translation.Value;
+
+                Entity eventEntity = EntityManager.CreateEntity(typeof(FireBulletEventComponent));
+                EntityManager.AddComponentData(eventEntity, new FireBulletEventComponent { 
+                    Position = firingPoint, Velocity = bulletVelocity
+                });;
             }
             
             //friction modifies acceleration in the inverse direction to the current velocity

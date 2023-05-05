@@ -64,6 +64,11 @@ public struct SettingsComponent : IComponentData
     public float AsteroidSpeedScaleMedium;
     public float AsteroidSpeedScaleSmall;
 
+    //bullets
+    public float MaxBulletAge;
+    public float MaxBulletCount;
+    public float BulletBaseSpeed;
+
     //input handling
     public KeyCode TurnLeftButton;
     public KeyCode TurnRightButton;

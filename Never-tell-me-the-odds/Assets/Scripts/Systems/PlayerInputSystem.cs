@@ -27,11 +27,13 @@ public class PlayerInputSystem : ComponentSystem
         SettingsComponent settings = GetSingleton<SettingsComponent>();
         PlayerInputComponent input = GetSingleton<PlayerInputComponent>();
 
+        PlayerInputComponent previousInputSate = input;
+
         input.Thrust = Input.GetKey(settings.ThrustButton);
         input.Left = Input.GetKey(settings.TurnLeftButton);
         input.Right = Input.GetKey(settings.TurnRightButton);
         input.Hyperspace = Input.GetKey(settings.HyperspaceButton);
-        input.Fire = Input.GetKey(settings.FireButton);
+        input.Fire = Input.GetKey(settings.FireButton);        
 
         //turning
         input.Turning = 0;
@@ -60,6 +62,9 @@ public class PlayerInputSystem : ComponentSystem
 
         //thrusting
         input.Thrusting = (input.Thrust) ? settings.ThrustAccelerationFactor : 0;
+
+        //firing     
+        input.Firing = input.Fire && !previousInputSate.Fire;      
 
         SetSingleton<PlayerInputComponent>(input);                    
     }

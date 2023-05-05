@@ -16,4 +16,7 @@ public struct PlayerInputComponent : IComponentData
 
     //thrusting
     public float Thrusting;
+
+    //firing
+    public bool Firing;
 }

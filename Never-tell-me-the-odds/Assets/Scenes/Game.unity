@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefabEntity: {fileID: 118060756522584972, guid: 4915d7b6df3e8a445857805d10d7f266, type: 3}
   AsteroidPrefabEntity: {fileID: 7172266331752259767, guid: 31d11c14963cfd940b4c776464e51f19, type: 3}
+  BulletPrefabEntity: {fileID: 7172266331752259767, guid: 3c38c851cb752384eb1dc63bd969b497, type: 3}
 --- !u!4 &1330422308
 Transform:
   m_ObjectHideFlags: 0
@@ -237,6 +238,9 @@ MonoBehaviour:
   AsteroidSpeedScaleBig: 1
   AsteroidSpeedScaleMedium: 1.2
   AsteroidSpeedScaleSmall: 1.6
+  MaxBulletAge: 1
+  MaxBulletCount: 5
+  BulletBaseSpeed: 17
   TurnLeftButton: 97
   TurnRightButton: 100
   ThrustButton: 112
@@ -405,6 +409,7 @@ MonoBehaviour:
   Turning: 0
   TurnKeyHoldDuration: 0
   Thrusting: 0
+  Firing: 0
 --- !u!4 &1915103713
 Transform:
   m_ObjectHideFlags: 0

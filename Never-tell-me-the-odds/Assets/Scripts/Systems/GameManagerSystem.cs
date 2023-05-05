@@ -12,8 +12,8 @@ public class GameManagerSystem : ComponentSystem
         SettingsComponent settings = GetSingleton<SettingsComponent>();       
 
         SpawnPlayer();
-        SpawnAsteroids(settings.NumStartingAsteroids, true, float3.zero, AsteroidComponent.AsteroidSize.BIG);           
-    }    
+        SpawnAsteroids(settings.NumStartingAsteroids, true, float3.zero, AsteroidComponent.AsteroidSize.BIG);             
+    }      
 
     private void SpawnPlayer()
     {
