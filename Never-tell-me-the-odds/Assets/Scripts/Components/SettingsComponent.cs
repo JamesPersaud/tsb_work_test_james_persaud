@@ -53,6 +53,7 @@ public struct SettingsComponent : IComponentData
 
     //asteroids
     public int NumStartingAsteroids;
+    public int NumFragments;
     public float2 NospawnBoundsMin;
     public float2 NospawnBoundsMax;
     public float AsteroidSpeedMin;

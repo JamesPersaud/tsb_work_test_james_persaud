@@ -27,6 +27,7 @@ public class AsteroidSystem : ComponentSystem
     private void CheckCollisions()
     {
         SettingsComponent settings = GetSingleton<SettingsComponent>();
+        //The managed collection here is a particularly bad sin but it's simply just a lot less code to write
         List<BulletData> bullets = new List<BulletData>();
 
         //collect all the bullets
@@ -59,7 +60,7 @@ public class AsteroidSystem : ComponentSystem
                         Entity eventEntity = EntityManager.CreateEntity(typeof(AsteroidSpawnEventComponent));
                         EntityManager.AddComponentData(eventEntity, new AsteroidSpawnEventComponent
                         {
-                            NumToSpawn = 4,
+                            NumToSpawn = settings.NumFragments,
                             RandomPositions = false,
                             Position = asteroidPosition,
                             Size = nextSize

@@ -18,6 +18,8 @@ Collision detection is very basic and if I had more time I would base it on spri
 
 There are additional notes on the design in the comments of SettingsComponent.cs, please don't miss those.
 
+Would love to be able to add polish like sound effects and animations but not before the game is functionally complete.
+
 -----
 
 Total time spent on this test is around 6 hours as of Friday evening 05/05/2023 Getting up to speed with ECS and in particular with the version available in the 2020 Unity build has been a major time sink.

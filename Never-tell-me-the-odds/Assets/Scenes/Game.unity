@@ -224,6 +224,7 @@ MonoBehaviour:
   PlayerStartFacing: 0
   ThrustAccelerationFactor: 15
   NumStartingAsteroids: 4
+  NumFragments: 2
   NospawnBoundsMin:
     x: -8
     y: -8
