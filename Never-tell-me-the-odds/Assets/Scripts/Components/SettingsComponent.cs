@@ -51,6 +51,19 @@ public struct SettingsComponent : IComponentData
     public float PlayerStartFacing;
     public float ThrustAccelerationFactor;
 
+    //asteroids
+    public int NumStartingAsteroids;
+    public float2 NospawnBoundsMin;
+    public float2 NospawnBoundsMax;
+    public float AsteroidSpeedMin;
+    public float AsteroidSpeedMax;
+    public float AsteroidSizeScaleBig;
+    public float AsteroidSizeScaleMedium;
+    public float AsteroidSizeScaleSmall;
+    public float AsteroidSpeedScaleBig;
+    public float AsteroidSpeedScaleMedium;
+    public float AsteroidSpeedScaleSmall;
+
     //input handling
     public KeyCode TurnLeftButton;
     public KeyCode TurnRightButton;
@@ -58,7 +71,5 @@ public struct SettingsComponent : IComponentData
     public KeyCode FireButton;
     public KeyCode HyperspaceButton;
     public float TurnIncrement;
-    public float TurnButtonRepeatSpeed;
-
-    
+    public float TurnButtonRepeatSpeed;    
 }

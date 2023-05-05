@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPrefabEntity: {fileID: 118060756522584972, guid: 4915d7b6df3e8a445857805d10d7f266, type: 3}
+  AsteroidPrefabEntity: {fileID: 7172266331752259767, guid: 31d11c14963cfd940b4c776464e51f19, type: 3}
 --- !u!4 &1330422308
 Transform:
   m_ObjectHideFlags: 0
@@ -216,11 +217,26 @@ MonoBehaviour:
   PlayerFriction: 1
   MaxPlayerSpeed: 17
   PlayerStartPosition:
-    x: 5
-    y: 5
+    x: 0
+    y: 0
     z: 0
-  PlayerStartFacing: 15
-  ThrustAccelerationFactor: 7
+  PlayerStartFacing: 0
+  ThrustAccelerationFactor: 15
+  NumStartingAsteroids: 4
+  NospawnBoundsMin:
+    x: -8
+    y: -8
+  NospawnBoundsMax:
+    x: 8
+    y: 8
+  AsteroidSpeedMin: 4
+  AsteroidSpeedMax: 7
+  AsteroidSizeScaleBig: 2.4
+  AsteroidSizeScaleMedium: 1.2
+  AsteroidSizeScaleSmall: 0.6
+  AsteroidSpeedScaleBig: 1
+  AsteroidSpeedScaleMedium: 1.2
+  AsteroidSpeedScaleSmall: 1.6
   TurnLeftButton: 97
   TurnRightButton: 100
   ThrustButton: 112

@@ -4,4 +4,5 @@ using Unity.Entities;
 public struct PrefabLoaderComponent : IComponentData
 {
     public Entity PlayerPrefabEntity;
+    public Entity AsteroidPrefabEntity;
 }
