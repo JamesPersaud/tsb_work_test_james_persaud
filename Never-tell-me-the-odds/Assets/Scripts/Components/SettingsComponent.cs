@@ -80,25 +80,31 @@ public struct SettingsComponent : IComponentData
 
     public float GetSpeedScaleByAsteroidSize(AsteroidComponent.AsteroidSize size)
     {
+        float scale; 
+
         switch (size)
         {
-            case AsteroidComponent.AsteroidSize.BIG: return AsteroidSpeedScaleBig; break;
-            case AsteroidComponent.AsteroidSize.MEDIUM: return AsteroidSpeedScaleMedium; break;
-            case AsteroidComponent.AsteroidSize.SMALL: return AsteroidSpeedScaleSmall; break;
+            case AsteroidComponent.AsteroidSize.BIG: scale = AsteroidSpeedScaleBig; break;
+            case AsteroidComponent.AsteroidSize.MEDIUM: scale = AsteroidSpeedScaleMedium; break;
+            case AsteroidComponent.AsteroidSize.SMALL: scale = AsteroidSpeedScaleSmall; break;
+            default: scale = 1; break;
         }
 
-        return 1;
+        return scale;
     }
 
     public float GetSizeScaleByAsteroidSize(AsteroidComponent.AsteroidSize size)
     {
+        float scale;
+
         switch (size)
         {
-            case AsteroidComponent.AsteroidSize.BIG: return AsteroidSizeScaleBig; break;
-            case AsteroidComponent.AsteroidSize.MEDIUM: return AsteroidSizeScaleMedium; break;
-            case AsteroidComponent.AsteroidSize.SMALL: return AsteroidSizeScaleSmall; break;
+            case AsteroidComponent.AsteroidSize.BIG: scale = AsteroidSizeScaleBig; break;
+            case AsteroidComponent.AsteroidSize.MEDIUM: scale = AsteroidSizeScaleMedium; break;
+            case AsteroidComponent.AsteroidSize.SMALL: scale = AsteroidSizeScaleSmall; break;
+            default: scale = 1; break;
         }
 
-        return 1;
+        return scale;
     }
 }

@@ -17,6 +17,7 @@ public class PlayerSystem : ComponentSystem
             ref AccelerationComponent acceleration,
             ref Translation translation) =>
         {
+            //set and rotate the player to its current heading
             player.Heading += input.Turning;
 
             if(player.Heading <0)
@@ -33,7 +34,7 @@ public class PlayerSystem : ComponentSystem
             acceleration.Acceleration = float3.zero;
 
             if (input.Thrusting != 0)
-            {          
+            {                          
                 acceleration.Acceleration = new float3(0,1,0);
                 acceleration.Acceleration = math.rotate(rotation.Value, acceleration.Acceleration);
                 acceleration.Acceleration *= input.Thrusting;
@@ -61,9 +62,10 @@ public class PlayerSystem : ComponentSystem
                 acceleration.Acceleration += frictionVector;
             }
 
+            //velocity bounds
             if(math.length(velocity.Velocity) <0)
             {
-                velocity.Velocity = float3.zero;               
+                velocity.Velocity = float3.zero;
             }
 
             if (math.length(velocity.Velocity) > settings.MaxPlayerSpeed)

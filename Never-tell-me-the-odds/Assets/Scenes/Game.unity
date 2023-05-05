@@ -230,8 +230,8 @@ MonoBehaviour:
   NospawnBoundsMax:
     x: 8
     y: 8
-  AsteroidSpeedMin: 4
-  AsteroidSpeedMax: 7
+  AsteroidSpeedMin: 2
+  AsteroidSpeedMax: 4
   AsteroidSizeScaleBig: 2.4
   AsteroidSizeScaleMedium: 1.2
   AsteroidSizeScaleSmall: 0.6
