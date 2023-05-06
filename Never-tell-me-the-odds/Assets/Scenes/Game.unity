@@ -222,7 +222,7 @@ MonoBehaviour:
     y: 0
     z: 0
   PlayerStartFacing: 0
-  ThrustAccelerationFactor: 15
+  ThrustAccelerationFactor: 12
   NumStartingAsteroids: 4
   NumFragments: 2
   NospawnBoundsMin:
@@ -231,8 +231,8 @@ MonoBehaviour:
   NospawnBoundsMax:
     x: 8
     y: 8
-  AsteroidSpeedMin: 2
-  AsteroidSpeedMax: 4
+  AsteroidSpeedMin: 1
+  AsteroidSpeedMax: 3
   AsteroidSizeScaleBig: 2.4
   AsteroidSizeScaleMedium: 1.2
   AsteroidSizeScaleSmall: 0.6

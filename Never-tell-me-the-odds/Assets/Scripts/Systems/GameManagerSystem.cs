@@ -13,7 +13,12 @@ public class GameManagerSystem : ComponentSystem
 
         SpawnPlayer();
         SpawnInitialAsteroids();
-    }      
+    }
+
+    protected override void OnUpdate()
+    {
+        EntityUpkeep();
+    }
 
     private void SpawnPlayer()
     {
@@ -40,8 +45,12 @@ public class GameManagerSystem : ComponentSystem
         });        
     }    
 
-    protected override void OnUpdate()
+    private void EntityUpkeep()
     {
-        
+        Entities.WithAll<DestroyMeComponent>().ForEach((
+        Entity entity) =>
+        {
+            EntityManager.DestroyEntity(entity);
+        });
     }
 }

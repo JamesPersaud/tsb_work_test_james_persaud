@@ -20,7 +20,7 @@ public class BulletSystem : ComponentSystem
             bullet.Age += Time.DeltaTime;
             if (bullet.Age >= settings.MaxBulletAge)
             {
-                EntityManager.DestroyEntity(entity);
+                EntityManager.AddComponent<DestroyMeComponent>(entity);
             }
         });
 
@@ -34,7 +34,7 @@ public class BulletSystem : ComponentSystem
                 count++;
             }
 
-            EntityManager.DestroyEntity(entity);
+            EntityManager.AddComponent<DestroyMeComponent>(entity);
         });
     }
 

@@ -11,11 +11,10 @@ using System.Collections.Generic;
 /// </summary>
 public class AsteroidSystem : ComponentSystem
 {
-    public struct BulletData
+    public struct BulletCollisionCheckData
     {
         public float3 Position;
         public Entity BulletEntity;
-        public bool DestroyMe;
     }
 
     protected override void OnUpdate()
@@ -28,13 +27,13 @@ public class AsteroidSystem : ComponentSystem
     {
         SettingsComponent settings = GetSingleton<SettingsComponent>();
         //The managed collection here is a particularly bad sin but it's simply just a lot less code to write
-        List<BulletData> bullets = new List<BulletData>();
+        List<BulletCollisionCheckData> bullets = new List<BulletCollisionCheckData>();
 
         //collect all the bullets
         Entities.WithAll<BulletComponent>().ForEach((
         Entity bulletEntity, ref Translation bulletTranslation) =>
         {
-            bullets.Add(new BulletData { Position = bulletTranslation.Value, BulletEntity = bulletEntity });
+            bullets.Add(new BulletCollisionCheckData { Position = bulletTranslation.Value, BulletEntity = bulletEntity });
         });
 
         Entities.WithAll<AsteroidComponent>().ForEach((
@@ -44,7 +43,7 @@ public class AsteroidSystem : ComponentSystem
             float3 asteroidPosition = asteroidTranslation.Value;
 
             //collide with bullets
-            foreach (BulletData data in bullets)
+            foreach (BulletCollisionCheckData data in bullets)
             {
                 float asteroidRadius = settings.GetSizeScaleByAsteroidSize(asteroidSize) / 2;
                 float distance = math.distance(asteroidPosition, data.Position);
@@ -67,8 +66,8 @@ public class AsteroidSystem : ComponentSystem
                         });
                     }
 
-                    EntityManager.DestroyEntity(asteroidEntity);
-                    EntityManager.DestroyEntity(data.BulletEntity);
+                    EntityManager.AddComponent<DestroyMeComponent>(asteroidEntity);
+                    EntityManager.AddComponent<DestroyMeComponent>(data.BulletEntity);
                 }
             }
         });       
@@ -80,7 +79,7 @@ public class AsteroidSystem : ComponentSystem
             Entity spawnEventEntity, ref AsteroidSpawnEventComponent spawnEvent) =>
         {
             SpawnAsteroids(spawnEvent.NumToSpawn, spawnEvent.RandomPositions, spawnEvent.Position, spawnEvent.Size);
-            EntityManager.DestroyEntity(spawnEventEntity);
+            EntityManager.AddComponent<DestroyMeComponent>(spawnEventEntity);
         });
     }
 
