@@ -8,9 +8,7 @@ public class GameManagerSystem : ComponentSystem
     //implement game state?
 
     protected override void OnStartRunning()
-    {
-        SettingsComponent settings = GetSingleton<SettingsComponent>();       
-
+    {             
         SpawnPlayer();
         SpawnInitialAsteroids();
     }
@@ -22,25 +20,24 @@ public class GameManagerSystem : ComponentSystem
 
     private void SpawnPlayer()
     {
-        SettingsComponent settings = GetSingleton<SettingsComponent>();
+        PlayerSettingsComponent playerSettings = GetSingleton<PlayerSettingsComponent>();
         PrefabLoaderComponent prefabLoader = GetSingleton<PrefabLoaderComponent>();
 
-        float3 startPosition = new Unity.Mathematics.float3(
-                    settings.PlayerStartPosition.x, settings.PlayerStartPosition.y, settings.PlayerStartPosition.z);        
+        float3 startPosition = playerSettings.PlayerStartPosition;
 
         //Instantiate the player
         Entity player = EntityManager.Instantiate(prefabLoader.PlayerPrefabEntity);
         EntityManager.SetComponentData(player, new Translation { Value = startPosition });
-        EntityManager.SetComponentData(player, new PlayerComponent { Heading = settings.PlayerStartFacing });
+        EntityManager.SetComponentData(player, new PlayerComponent { Heading = playerSettings.PlayerStartFacing });
     }
 
     private void SpawnInitialAsteroids()
     {
-        SettingsComponent settings = GetSingleton<SettingsComponent>();
+        AsteroidSettingsComponent asteroidSettings = GetSingleton<AsteroidSettingsComponent>();
 
         Entity eventEntity = EntityManager.CreateEntity(typeof(AsteroidSpawnEventComponent));
         EntityManager.AddComponentData(eventEntity, new AsteroidSpawnEventComponent { 
-            NumToSpawn = settings.NumStartingAsteroids, RandomPositions = true, 
+            NumToSpawn = asteroidSettings.NumStartingAsteroids, RandomPositions = true, 
             Position = float3.zero, Size = AsteroidComponent.AsteroidSize.BIG
         });        
     }    

@@ -7,7 +7,7 @@ public class MovementSystem : ComponentSystem
 {
     protected override void OnUpdate()
     {
-        SettingsComponent settings = GetSingleton<SettingsComponent>();        
+        GameSettingsComponent gameSettings = GetSingleton<GameSettingsComponent>();        
 
         Entities.WithAll<VelocityComponent, AccelerationComponent>().ForEach((
             ref AccelerationComponent acceleration,
@@ -25,8 +25,8 @@ public class MovementSystem : ComponentSystem
             finalPosition += velocity.Velocity * Time.DeltaTime;
 
             //is there a smart wrap function?
-            float halfwidth = settings.ScreenWidth / 2;
-            float halfHeight = settings.ScreenHeight / 2;
+            float halfwidth = gameSettings.ScreenWidth / 2;
+            float halfHeight = gameSettings.ScreenHeight / 2;
 
             if (finalPosition.x < -halfwidth) { finalPosition.x = halfwidth; }
             else if (finalPosition.x > halfwidth) {finalPosition.x = -halfwidth; }

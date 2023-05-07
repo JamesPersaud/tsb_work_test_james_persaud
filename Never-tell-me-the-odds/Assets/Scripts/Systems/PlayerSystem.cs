@@ -7,7 +7,7 @@ public class PlayerSystem : ComponentSystem
 {
     protected override void OnUpdate()
     {
-        SettingsComponent settings = GetSingleton<SettingsComponent>();
+        PlayerSettingsComponent playerSettings = GetSingleton<PlayerSettingsComponent>();
         PlayerInputComponent input = GetSingleton<PlayerInputComponent>();
 
         Entities.WithAll<PlayerComponent>().ForEach((        
@@ -46,19 +46,20 @@ public class PlayerSystem : ComponentSystem
                 float3 firingDirectionLocal = new float3(0, 1, 0);
                 firingDirectionLocal = math.rotate(rotation.Value, firingDirectionLocal);
 
-                float3 bulletVelocity = (firingDirectionLocal * settings.BulletBaseSpeed) + velocity.Velocity;
+                BulletSettingsComponent bulletSettings = GetSingleton<BulletSettingsComponent>();
+                float3 bulletVelocity = (firingDirectionLocal * bulletSettings.BulletBaseSpeed) + velocity.Velocity;
                 float3 firingPoint = firingDirectionLocal * 0.5f + translation.Value;
 
                 Entity eventEntity = EntityManager.CreateEntity(typeof(FireBulletEventComponent));
                 EntityManager.AddComponentData(eventEntity, new FireBulletEventComponent { 
-                    Position = firingPoint, Velocity = bulletVelocity
+                    Position = firingPoint, Velocity = bulletVelocity, FiredByPlayer = true
                 });;
             }
             
             //friction modifies acceleration in the inverse direction to the current velocity
             if(math.length(velocity.Velocity) >0)
             {
-                float3 frictionVector = math.normalize(-velocity.Velocity) * settings.PlayerFriction;
+                float3 frictionVector = math.normalize(-velocity.Velocity) * playerSettings.PlayerFriction;
                 acceleration.Acceleration += frictionVector;
             }
 
@@ -68,9 +69,9 @@ public class PlayerSystem : ComponentSystem
                 velocity.Velocity = float3.zero;
             }
 
-            if (math.length(velocity.Velocity) > settings.MaxPlayerSpeed)
+            if (math.length(velocity.Velocity) > playerSettings.MaxPlayerSpeed)
             {
-                velocity.Velocity = math.normalize(velocity.Velocity) * settings.MaxPlayerSpeed;
+                velocity.Velocity = math.normalize(velocity.Velocity) * playerSettings.MaxPlayerSpeed;
             }
         });
     }

@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [GenerateAuthoringComponent]
-public struct SettingsComponent : IComponentData
+public struct GameSettingsComponent : IComponentData
 {
     public const float THE_ODDS = 0.0002688172f; //approximately 3720 to one.
 
@@ -43,69 +43,4 @@ public struct SettingsComponent : IComponentData
     //screen size
     public float ScreenWidth;
     public float ScreenHeight;
-
-    //player movement
-    public float PlayerFriction;
-    public float MaxPlayerSpeed;
-    public float3 PlayerStartPosition;
-    public float PlayerStartFacing;
-    public float ThrustAccelerationFactor;
-
-    //asteroids
-    public int NumStartingAsteroids;
-    public int NumFragments;
-    public float2 NospawnBoundsMin;
-    public float2 NospawnBoundsMax;
-    public float AsteroidSpeedMin;
-    public float AsteroidSpeedMax;
-    public float AsteroidSizeScaleBig;
-    public float AsteroidSizeScaleMedium;
-    public float AsteroidSizeScaleSmall;
-    public float AsteroidSpeedScaleBig;
-    public float AsteroidSpeedScaleMedium;
-    public float AsteroidSpeedScaleSmall;
-
-    //bullets
-    public float MaxBulletAge;
-    public float MaxBulletCount;
-    public float BulletBaseSpeed;
-
-    //input handling
-    public KeyCode TurnLeftButton;
-    public KeyCode TurnRightButton;
-    public KeyCode ThrustButton;
-    public KeyCode FireButton;
-    public KeyCode HyperspaceButton;
-    public float TurnIncrement;
-    public float TurnButtonRepeatSpeed;
-
-    public float GetSpeedScaleByAsteroidSize(AsteroidComponent.AsteroidSize size)
-    {
-        float scale; 
-
-        switch (size)
-        {
-            case AsteroidComponent.AsteroidSize.BIG: scale = AsteroidSpeedScaleBig; break;
-            case AsteroidComponent.AsteroidSize.MEDIUM: scale = AsteroidSpeedScaleMedium; break;
-            case AsteroidComponent.AsteroidSize.SMALL: scale = AsteroidSpeedScaleSmall; break;
-            default: scale = 1; break;
-        }
-
-        return scale;
-    }
-
-    public float GetSizeScaleByAsteroidSize(AsteroidComponent.AsteroidSize size)
-    {
-        float scale;
-
-        switch (size)
-        {
-            case AsteroidComponent.AsteroidSize.BIG: scale = AsteroidSizeScaleBig; break;
-            case AsteroidComponent.AsteroidSize.MEDIUM: scale = AsteroidSizeScaleMedium; break;
-            case AsteroidComponent.AsteroidSize.SMALL: scale = AsteroidSizeScaleSmall; break;
-            default: scale = 1; break;
-        }
-
-        return scale;
-    }
 }

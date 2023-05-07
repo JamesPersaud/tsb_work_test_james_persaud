@@ -8,41 +8,45 @@ public class BulletSystem : ComponentSystem
 
     protected override void OnUpdate()
     {
-        SettingsComponent settings = GetSingleton<SettingsComponent>();
+        BulletSettingsComponent bullletSettings = GetSingleton<BulletSettingsComponent>();
         int count = 0;
 
         //kill any bullets that are too old
         Entities.WithAll<BulletComponent>().ForEach((
             Entity entity, ref BulletComponent bullet) =>
         {
-            count++;
+            if (bullet.FiredByPlayer)
+            {
+                count++;
+            }
 
             bullet.Age += Time.DeltaTime;
-            if (bullet.Age >= settings.MaxBulletAge)
+            if (bullet.Age >= bullletSettings.MaxBulletAge)
             {
                 EntityManager.AddComponent<DestroyMeComponent>(entity);
             }
         });
 
-        //spawn new bullets if the fire button has been pressed and there is room for more
+        //spawn new bullets
         Entities.WithAll<FireBulletEventComponent>().ForEach((
             Entity entity, ref FireBulletEventComponent fireEvent) =>
-        {
-            if (count < settings.MaxBulletCount)
+        {  
+            if (!fireEvent.FiredByPlayer || count < bullletSettings.MaxBulletCount)
             {
-                SpawnBullet(fireEvent.Position, fireEvent.Velocity);
-                count++;
+                SpawnBullet(fireEvent.Position, fireEvent.Velocity, true);
+                count += (fireEvent.FiredByPlayer) ? 1 : 0;
             }
 
             EntityManager.AddComponent<DestroyMeComponent>(entity);
         });
     }
 
-    private void SpawnBullet(float3 position, float3 velocity )
+    private void SpawnBullet(float3 position, float3 velocity, bool firedByPlayer )
     {
         PrefabLoaderComponent prefabLoader = GetSingleton<PrefabLoaderComponent>();
         Entity bullet = EntityManager.Instantiate(prefabLoader.BulletPrefabEntity);
         EntityManager.SetComponentData(bullet, new Translation { Value = position });
         EntityManager.SetComponentData(bullet, new VelocityComponent { Velocity = velocity });
+        EntityManager.SetComponentData(bullet, new BulletComponent { Age = 0, FiredByPlayer = firedByPlayer });
     }
 }

@@ -25,7 +25,9 @@ public class AsteroidSystem : ComponentSystem
 
     private void CheckCollisions()
     {
-        SettingsComponent settings = GetSingleton<SettingsComponent>();
+        GameSettingsComponent gameSettings = GetSingleton<GameSettingsComponent>();
+        AsteroidSettingsComponent asteroidSettings = GetSingleton<AsteroidSettingsComponent>();
+
         //The managed collection here is a particularly bad sin but it's simply just a lot less code to write
         List<BulletCollisionCheckData> bullets = new List<BulletCollisionCheckData>();
 
@@ -45,7 +47,7 @@ public class AsteroidSystem : ComponentSystem
             //collide with bullets
             foreach (BulletCollisionCheckData data in bullets)
             {
-                float asteroidRadius = settings.GetSizeScaleByAsteroidSize(asteroidSize) / 2;
+                float asteroidRadius = GetSizeScaleByAsteroidSize(asteroidSettings, asteroidSize) / 2;
                 float distance = math.distance(asteroidPosition, data.Position);
             
                 if (distance < asteroidRadius) //collision detected!
@@ -59,7 +61,7 @@ public class AsteroidSystem : ComponentSystem
                         Entity eventEntity = EntityManager.CreateEntity(typeof(AsteroidSpawnEventComponent));
                         EntityManager.AddComponentData(eventEntity, new AsteroidSpawnEventComponent
                         {
-                            NumToSpawn = settings.NumFragments,
+                            NumToSpawn = asteroidSettings.NumFragments,
                             RandomPositions = false,
                             Position = asteroidPosition,
                             Size = nextSize
@@ -85,22 +87,23 @@ public class AsteroidSystem : ComponentSystem
 
     private void SpawnAsteroids(int numToSpawn, bool randomPosition, float3 position, AsteroidComponent.AsteroidSize size)
     {
-        SettingsComponent settings = GetSingleton<SettingsComponent>();
+        GameSettingsComponent gameSettings = GetSingleton<GameSettingsComponent>();
+        AsteroidSettingsComponent asteroidSettings = GetSingleton<AsteroidSettingsComponent>();
         PrefabLoaderComponent prefabLoader = GetSingleton<PrefabLoaderComponent>();
 
         for (int i = 0; i < numToSpawn; i++)
         {
             if (randomPosition)
             {
-                position = GetRandomSpawnPosition(settings);
+                position = GetRandomSpawnPosition(gameSettings, asteroidSettings);
             }
 
-            float spawnSpeed = UnityEngine.Random.Range(settings.AsteroidSpeedMin, settings.AsteroidSpeedMax);
-            spawnSpeed *= settings.GetSpeedScaleByAsteroidSize(size);
+            float spawnSpeed = UnityEngine.Random.Range(asteroidSettings.AsteroidSpeedMin, asteroidSettings.AsteroidSpeedMax);
+            spawnSpeed *= GetSpeedScaleByAsteroidSize(asteroidSettings, size);
             float3 spawnVelocity = new float3(0, spawnSpeed, 0);
             spawnVelocity = math.rotate(quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 2 * math.PI)), spawnVelocity);
 
-            float scale = settings.GetSizeScaleByAsteroidSize(size);
+            float scale = GetSizeScaleByAsteroidSize(asteroidSettings, size);
             float4x4 trs = float4x4.TRS(position, float4.zero, new float3(scale, scale, 1));
 
             Entity asteroid = EntityManager.Instantiate(prefabLoader.AsteroidPrefabEntity);
@@ -112,17 +115,47 @@ public class AsteroidSystem : ComponentSystem
         }
     }
 
-    private float3 GetRandomSpawnPosition(SettingsComponent settings)
+    private float3 GetRandomSpawnPosition(GameSettingsComponent gameSettings, AsteroidSettingsComponent asteroidSettings)
     {
         float3 position = float3.zero;
 
-        while (position.x > settings.NospawnBoundsMin.x && position.x < settings.NospawnBoundsMax.x &&
-            position.y > settings.NospawnBoundsMin.y && position.y < settings.NospawnBoundsMax.y)
+        while (position.x > asteroidSettings.NospawnBoundsMin.x && position.x < asteroidSettings.NospawnBoundsMax.x &&
+            position.y > asteroidSettings.NospawnBoundsMin.y && position.y < asteroidSettings.NospawnBoundsMax.y)
         {
-            position.x = UnityEngine.Random.Range(-settings.ScreenWidth / 2, settings.ScreenWidth / 2);
-            position.x = UnityEngine.Random.Range(-settings.ScreenHeight / 2, settings.ScreenHeight / 2);
+            position.x = UnityEngine.Random.Range(-gameSettings.ScreenWidth / 2, gameSettings.ScreenWidth / 2);
+            position.x = UnityEngine.Random.Range(-gameSettings.ScreenHeight / 2, gameSettings.ScreenHeight / 2);
         }
 
         return position;
+    }
+
+    private float GetSpeedScaleByAsteroidSize(AsteroidSettingsComponent asteroidSettings, AsteroidComponent.AsteroidSize size)
+    {
+        float scale;
+
+        switch (size)
+        {
+            case AsteroidComponent.AsteroidSize.BIG: scale = asteroidSettings.AsteroidSpeedBySizeBig; break;
+            case AsteroidComponent.AsteroidSize.MEDIUM: scale = asteroidSettings.AsteroidSpeedBySizeMedium; break;
+            case AsteroidComponent.AsteroidSize.SMALL: scale = asteroidSettings.AsteroidSpeedBySizeSmall; break;
+            default: scale = 1; break;
+        }
+
+        return scale;
+    }
+
+    private float GetSizeScaleByAsteroidSize(AsteroidSettingsComponent asteroidSettings, AsteroidComponent.AsteroidSize size)
+    {
+        float scale;
+
+        switch (size)
+        {
+            case AsteroidComponent.AsteroidSize.BIG: scale = asteroidSettings.AsteroidScaleBySizeBig; break;
+            case AsteroidComponent.AsteroidSize.MEDIUM: scale = asteroidSettings.AsteroidScaleBySizeMedium; break;
+            case AsteroidComponent.AsteroidSize.SMALL: scale = asteroidSettings.AsteroidScaleBySizeSmall; break;
+            default: scale = 1; break;
+        }
+
+        return scale;
     }
 }

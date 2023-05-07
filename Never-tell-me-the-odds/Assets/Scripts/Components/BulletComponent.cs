@@ -4,4 +4,5 @@ using Unity.Entities;
 public struct BulletComponent : IComponentData
 {
     public float Age;
+    public bool FiredByPlayer;
 }
