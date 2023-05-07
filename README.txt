@@ -5,7 +5,14 @@ The current state of this project is barely started in terms of the functionalit
 
 -----
 
-You can currently only fly the player's ship around and shoot, with A and D to steer and P to thrust. O will fire bullets. There are some asteroids you can destroy but for now the player is invulnerable, there are no flying saucers and there is no score or game over condition.
+Current features
+ - Player ship and controlls: A and D to steer and P to thrust. O will fire bullets.
+ - Asteroids
+    can be shot
+	will break down into smaller ones
+ - Flying saucers (only the big saucer AI is implemented and no diagonal movement at this point)
+	can be shot
+	will fire bullets
 
 I chose to shoot as close to the mark of the original game as possible in terms of aesthetics and mechanics so some things I've tried to be authentic with such as the size of the play area/ship, speed, acceleration and interia. Although these need a bit of tweaking I've made it easy to do so in the unity Editor while sticking to the ECS entities requirements. Turning is in 5 degree increments too like in the arcade.
 
@@ -20,10 +27,10 @@ There are additional notes on the design in the comments of GameSettingsComponen
 
 Would love to be able to add polish like sound effects and animations but not before the game is functionally complete.
 
-Overall I feel as though this assignment would require un unreasonable amount of time, for unpaid work on top of an already full schedule, if one was to both complete all of the functionality listed and do things exactly as they would in a production environment.
-
 -----
 
-Total time spent on this test is around 8 hours as of Saturday evening 06/05/2023 Getting up to speed with ECS and in particular with the version available in the 2020 Unity build has been a major time sink.
+Total time spent on this test is around 8 hours as of Sunday evening 07/05/2023 Getting up to speed with ECS and in particular with the version available in the 2020 Unity build has been a major time sink.
+
+Overall I feel as though this assignment would require un unreasonable amount of time, for unpaid work on top of an already full schedule, if one was to both complete all of the functionality listed and do things exactly as they would in a production environment.
 
 James Persaud
