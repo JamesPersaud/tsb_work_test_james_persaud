@@ -53,7 +53,7 @@ public class PlayerSystem : ComponentSystem
                 Entity eventEntity = EntityManager.CreateEntity(typeof(FireBulletEventComponent));
                 EntityManager.AddComponentData(eventEntity, new FireBulletEventComponent { 
                     Position = firingPoint, Velocity = bulletVelocity, FiredByPlayer = true
-                });;
+                });
             }
             
             //friction modifies acceleration in the inverse direction to the current velocity

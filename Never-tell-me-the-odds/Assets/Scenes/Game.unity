@@ -304,15 +304,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d074419f2b5f32649a597a78013d72c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UfoSpeedByTypeBig: 0
-  UfoSpeedByTypeSmall: 0
-  UfoScaleByTypeBig: 0
-  UfoScaleByTypeSmall: 0
-  UfoSpawnTimeMin: 0
-  UfoSpawnTimeMax: 0
-  UfoSpawnSmallUfoChance: 0
-  UfoFireTimeMin: 0
-  UfoFireTimeMax: 0
+  UfoSpeedByTypeBig: 4
+  UfoSpeedByTypeSmall: 7
+  UfoScaleByTypeBig: 1.5
+  UfoScaleByTypeSmall: 0.75
+  UfoSpawnTimeMin: 5
+  UfoSpawnTimeMax: 10
+  UfoSpawnSmallUfoChance: 0.2
+  UfoFireTimeMin: 1
+  UfoFireTimeMax: 2
+  UfoFireRateByTypeBig: 1
+  UfoFireRateByTypeSmall: 0.6
 --- !u!1 &1330422306
 GameObject:
   m_ObjectHideFlags: 0

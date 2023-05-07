@@ -11,4 +11,5 @@ public struct UfoComponent : IComponentData
     }
 
     public UfoType Type;
+    public float TimeToFire;
 }

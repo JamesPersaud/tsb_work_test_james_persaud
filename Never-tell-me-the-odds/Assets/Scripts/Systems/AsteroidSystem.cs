@@ -3,24 +3,17 @@ using Unity.Jobs;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Collections;
-using System.Collections.Generic;
 
 /// <summary>
 /// This system deals with asteroid collisions - with the bullets, the player - and anything else that may be out there
 /// in space!
 /// </summary>
 public class AsteroidSystem : ComponentSystem
-{
-    public struct BulletCollisionCheckData
-    {
-        public float3 Position;
-        public Entity BulletEntity;
-    }
-
+{  
     protected override void OnUpdate()
     {
         ResolveSpawnEvents();
-        CheckCollisions();        
+        CheckCollisions();
     }
 
     private void CheckCollisions()
@@ -28,14 +21,11 @@ public class AsteroidSystem : ComponentSystem
         GameSettingsComponent gameSettings = GetSingleton<GameSettingsComponent>();
         AsteroidSettingsComponent asteroidSettings = GetSingleton<AsteroidSettingsComponent>();
 
-        //The managed collection here is a particularly bad sin but it's simply just a lot less code to write
-        List<BulletCollisionCheckData> bullets = new List<BulletCollisionCheckData>();
-
-        //collect all the bullets
+        NativeList<Entity> bullets = new NativeList<Entity>(100, Allocator.Temp);        
         Entities.WithAll<BulletComponent>().ForEach((
-        Entity bulletEntity, ref Translation bulletTranslation) =>
+        Entity bulletEntity) =>
         {
-            bullets.Add(new BulletCollisionCheckData { Position = bulletTranslation.Value, BulletEntity = bulletEntity });
+            bullets.Add(bulletEntity);
         });
 
         Entities.WithAll<AsteroidComponent>().ForEach((
@@ -45,10 +35,11 @@ public class AsteroidSystem : ComponentSystem
             float3 asteroidPosition = asteroidTranslation.Value;
 
             //collide with bullets
-            foreach (BulletCollisionCheckData data in bullets)
+            foreach (Entity bulletEntity in bullets)
             {
+                Translation bulletTranslation = EntityManager.GetComponentData<Translation>(bulletEntity);
                 float asteroidRadius = GetSizeScaleByAsteroidSize(asteroidSettings, asteroidSize) / 2;
-                float distance = math.distance(asteroidPosition, data.Position);
+                float distance = math.distance(asteroidPosition, bulletTranslation.Value);
             
                 if (distance < asteroidRadius) //collision detected!
                 {
@@ -69,10 +60,12 @@ public class AsteroidSystem : ComponentSystem
                     }
 
                     EntityManager.AddComponent<DestroyMeComponent>(asteroidEntity);
-                    EntityManager.AddComponent<DestroyMeComponent>(data.BulletEntity);
+                    EntityManager.AddComponent<DestroyMeComponent>(bulletEntity);
                 }
             }
-        });       
+        });
+
+        bullets.Dispose();
     }
 
     private void ResolveSpawnEvents()

@@ -46,7 +46,7 @@ public class GameManagerSystem : ComponentSystem
     {
         Entities.WithAll<DestroyMeComponent>().ForEach((
         Entity entity) =>
-        {
+        {            
             EntityManager.DestroyEntity(entity);
         });
     }

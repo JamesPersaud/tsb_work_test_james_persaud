@@ -10,6 +10,7 @@ public class MovementSystem : ComponentSystem
         GameSettingsComponent gameSettings = GetSingleton<GameSettingsComponent>();        
 
         Entities.WithAll<VelocityComponent, AccelerationComponent>().ForEach((
+            Entity movementEntity,
             ref AccelerationComponent acceleration,
             ref VelocityComponent velocity,
             ref Translation translation) =>
@@ -22,14 +23,17 @@ public class MovementSystem : ComponentSystem
                 finalVelocity += acceleration.Acceleration * Time.DeltaTime;
             }
 
-            finalPosition += velocity.Velocity * Time.DeltaTime;
+            finalPosition += velocity.Velocity * Time.DeltaTime;                                                    
 
-            //is there a smart wrap function?
             float halfwidth = gameSettings.ScreenWidth / 2;
             float halfHeight = gameSettings.ScreenHeight / 2;
 
-            if (finalPosition.x < -halfwidth) { finalPosition.x = halfwidth; }
-            else if (finalPosition.x > halfwidth) {finalPosition.x = -halfwidth; }
+            //the ufo just flies off the end of the screen
+            if (!EntityManager.HasComponent<UfoComponent>(movementEntity))
+            {
+                if (finalPosition.x < -halfwidth) { finalPosition.x = halfwidth; }
+                else if (finalPosition.x > halfwidth) { finalPosition.x = -halfwidth; }
+            }
 
             if (finalPosition.y < -halfHeight) { finalPosition.y = halfHeight; }
             else if (finalPosition.y > halfwidth) { finalPosition.y = -halfHeight; }
