@@ -315,6 +315,7 @@ MonoBehaviour:
   UfoFireTimeMax: 2
   UfoFireRateByTypeBig: 1
   UfoFireRateByTypeSmall: 0.6
+  UfoAimedFireAccuracy: 5
 --- !u!1 &1330422306
 GameObject:
   m_ObjectHideFlags: 0

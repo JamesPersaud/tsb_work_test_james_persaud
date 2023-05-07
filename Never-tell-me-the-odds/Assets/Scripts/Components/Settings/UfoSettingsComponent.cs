@@ -19,4 +19,5 @@ public struct UfoSettingsComponent : IComponentData
     public float UfoFireTimeMax;
     public float UfoFireRateByTypeBig;
     public float UfoFireRateByTypeSmall;
+    public float UfoAimedFireAccuracy;
 }

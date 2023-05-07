@@ -42,8 +42,22 @@ public class UfoSystem : ComponentSystem
                 }
                 else
                 {
-                    //fire towards player
-                    firingPosition = math.rotate(quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 2 * math.PI)), firingVelocity);
+                    float3 playerPosition = float3.zero;
+                    float3 ufoPosition = ufoTranslation.Value;
+
+                    Entities.WithAll<PlayerComponent>().ForEach((
+                        ref Translation playerTranspation) =>
+                    {
+                        playerPosition = playerTranspation.Value;
+                    });
+                    
+                    float angle = math.atan2(playerPosition.y - ufoPosition.y, playerPosition.x - ufoPosition.x) * (180 / math.PI);                   
+
+                    float aimDrift = UnityEngine.Random.Range(-ufoSettings.UfoAimedFireAccuracy, ufoSettings.UfoAimedFireAccuracy);
+                    angle += aimDrift;
+                    angle -= 90; // compensate for our reference 0 degrees being along the +y axis                 
+
+                    firingPosition = math.rotate(quaternion.Euler(0, 0, angle * (math.PI / 180)), firingVelocity);
                     firingVelocity = firingPosition * speed;
                 }
 
