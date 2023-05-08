@@ -10,9 +10,14 @@ Current features
  - Asteroids
     can be shot
 	will break down into smaller ones
- - Flying saucers (only the big saucer AI is implemented and no diagonal movement at this point)
+ - Flying saucers (no diagonal movement)
 	can be shot
 	will fire bullets
+	small ufo will aim at the player
+	small ones quite a bit more likely to spawn than in the reference game
+ - Powerups
+    Shield randomly appears and can be collected resulting in a shield effect lasting for a few seconds
+	Double shot randomly appears and while active the player fires double shots
 
 I chose to shoot as close to the mark of the original game as possible in terms of aesthetics and mechanics so some things I've tried to be authentic with such as the size of the play area/ship, speed, acceleration and interia. Although these need a bit of tweaking I've made it easy to do so in the unity Editor while sticking to the ECS entities requirements. Turning is in 5 degree increments too like in the arcade.
 

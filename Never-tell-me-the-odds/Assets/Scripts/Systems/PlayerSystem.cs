@@ -16,7 +16,7 @@ public class PlayerSystem : ComponentSystem
             ref VelocityComponent velocity,
             ref AccelerationComponent acceleration,
             ref Translation translation) =>
-        {
+        {            
             //set and rotate the player to its current heading
             player.Heading += input.Turning;
 
@@ -43,17 +43,20 @@ public class PlayerSystem : ComponentSystem
             //if firing then create a new fire bullet event
             if(input.Firing)
             {
-                float3 firingDirectionLocal = new float3(0, 1, 0);
-                firingDirectionLocal = math.rotate(rotation.Value, firingDirectionLocal);
+                bool doubleShot = false;                
 
-                BulletSettingsComponent bulletSettings = GetSingleton<BulletSettingsComponent>();
-                float3 bulletVelocity = (firingDirectionLocal * bulletSettings.BulletBaseSpeed) + velocity.Velocity;
-                float3 firingPoint = firingDirectionLocal * 0.5f + translation.Value;
-
-                Entity eventEntity = EntityManager.CreateEntity(typeof(FireBulletEventComponent));
-                EntityManager.AddComponentData(eventEntity, new FireBulletEventComponent { 
-                    Position = firingPoint, Velocity = bulletVelocity, FiredByPlayer = true
-                });
+                //double shot effect
+                Entities.WithAll<DoubleShotEffectComponent>().ForEach((Entity entity) => { doubleShot = true; });
+                
+                if (doubleShot)
+                {
+                    SpawnFireEvent(translation, rotation, velocity, -0.25f);
+                    SpawnFireEvent(translation, rotation, velocity, 0.25f);
+                }
+                else
+                {
+                    SpawnFireEvent(translation, rotation, velocity, 0);
+                }
             }
             
             //friction modifies acceleration in the inverse direction to the current velocity
@@ -73,6 +76,25 @@ public class PlayerSystem : ComponentSystem
             {
                 velocity.Velocity = math.normalize(velocity.Velocity) * playerSettings.MaxPlayerSpeed;
             }
+        });
+    }
+
+    private void SpawnFireEvent(Translation playerTranslation, Rotation playerRotation, VelocityComponent velocity, float xOffset)
+    {
+        BulletSettingsComponent bulletSettings = GetSingleton<BulletSettingsComponent>();
+
+        float3 firingDirectionLocal = new float3(xOffset, 1, 0);
+        firingDirectionLocal = math.rotate(playerRotation.Value, firingDirectionLocal);
+
+        float3 bulletVelocity = (firingDirectionLocal * bulletSettings.BulletBaseSpeed) + velocity.Velocity;
+        float3 firingPoint = firingDirectionLocal * 0.5f + playerTranslation.Value;
+
+        Entity eventEntity = EntityManager.CreateEntity(typeof(FireBulletEventComponent));
+        EntityManager.AddComponentData(eventEntity, new FireBulletEventComponent
+        {
+            Position = firingPoint,
+            Velocity = bulletVelocity,
+            FiredByPlayer = true
         });
     }
 }

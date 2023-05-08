@@ -9,7 +9,15 @@ public class BulletSystem : ComponentSystem
     protected override void OnUpdate()
     {
         BulletSettingsComponent bullletSettings = GetSingleton<BulletSettingsComponent>();
+        
+        int bulletLimit = bullletSettings.MaxBulletCount;
         int count = 0;
+
+        //double shot effect
+        Entities.WithAll<DoubleShotEffectComponent>().ForEach(( Entity entity) =>
+        {            
+            bulletLimit = bullletSettings.MaxBulletCount * 2;
+        });
 
         //kill any bullets that are too old
         Entities.WithAll<BulletComponent>().ForEach((
@@ -31,7 +39,7 @@ public class BulletSystem : ComponentSystem
         Entities.WithAll<FireBulletEventComponent>().ForEach((
             Entity entity, ref FireBulletEventComponent fireEvent) =>
         {  
-            if (!fireEvent.FiredByPlayer || count < bullletSettings.MaxBulletCount)
+            if (!fireEvent.FiredByPlayer || count < bulletLimit)
             {
                 SpawnBullet(fireEvent.Position, fireEvent.Velocity, true);
                 count += (fireEvent.FiredByPlayer) ? 1 : 0;

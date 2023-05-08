@@ -310,12 +310,77 @@ MonoBehaviour:
   UfoScaleByTypeSmall: 0.75
   UfoSpawnTimeMin: 5
   UfoSpawnTimeMax: 10
-  UfoSpawnSmallUfoChance: 0.2
+  UfoSpawnSmallUfoChance: 0.3
   UfoFireTimeMin: 1
   UfoFireTimeMax: 2
   UfoFireRateByTypeBig: 1
   UfoFireRateByTypeSmall: 0.6
   UfoAimedFireAccuracy: 5
+--- !u!1 &1044313804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1044313805}
+  - component: {fileID: 1044313806}
+  - component: {fileID: 1044313807}
+  m_Layer: 0
+  m_Name: PowerupSettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1044313805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044313804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1525614610}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1044313806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044313804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf831366e544fd34ca9b39ab6e9f9f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinTimeToSpawnShieldPickup: 6
+  MaxTimeToSpawnShieldPickup: 10
+  ShieldPickupDuration: 4
+  ShieldEffectDuration: 8
+  MinTimeToSpawnDoubleShotPickup: 8
+  MaxTimeToSpawnDoubleShotPickup: 16
+  DoubleShotPickupDuration: 4
+  DoubleShotEffectDuration: 12
+--- !u!114 &1044313807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044313804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConversionMode: 0
 --- !u!1 &1330422306
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +415,9 @@ MonoBehaviour:
   AsteroidPrefabEntity: {fileID: 7172266331752259767, guid: 31d11c14963cfd940b4c776464e51f19, type: 3}
   BulletPrefabEntity: {fileID: 7172266331752259767, guid: 3c38c851cb752384eb1dc63bd969b497, type: 3}
   UfoPrefabEntity: {fileID: 118060756522584972, guid: 75d8d831122677f40a4460efbc97f1d8, type: 3}
+  ShieldPickupPrefabEntity: {fileID: 118060756522584972, guid: 4429ef1f9f0aabd468c3d050f54c613f, type: 3}
+  ShieldEffectPrefabEntity: {fileID: 118060756522584972, guid: d2443f747a8cd704693e87208ec4c0e4, type: 3}
+  DoubleShotPickupPrefabEntity: {fileID: 118060756522584972, guid: 55c29b97efde25849a46930b61c78641, type: 3}
 --- !u!4 &1330422308
 Transform:
   m_ObjectHideFlags: 0
@@ -474,6 +542,7 @@ Transform:
   - {fileID: 1335628096}
   - {fileID: 56206235}
   - {fileID: 371099594}
+  - {fileID: 1044313805}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -617,7 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74909e69c4ede04fbfe9cc4b2403dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxBulletAge: 1
+  MaxBulletAge: 1.2
   MaxBulletCount: 5
   BulletBaseSpeed: 17
 --- !u!1 &1915103710

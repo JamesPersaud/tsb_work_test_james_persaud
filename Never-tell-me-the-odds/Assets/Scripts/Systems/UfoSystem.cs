@@ -42,6 +42,7 @@ public class UfoSystem : ComponentSystem
                 }
                 else
                 {
+                    //aims for the player
                     float3 playerPosition = float3.zero;
                     float3 ufoPosition = ufoTranslation.Value;
 

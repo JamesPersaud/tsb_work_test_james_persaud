@@ -7,6 +7,6 @@ public struct BulletSettingsComponent : IComponentData
 {
     //bullets
     public float MaxBulletAge;
-    public float MaxBulletCount;
+    public int MaxBulletCount;
     public float BulletBaseSpeed;
 }
